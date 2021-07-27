@@ -1,0 +1,20 @@
+import socket
+s = socket.socket()
+host = socket.gethostname()
+port = 8080
+s.connect((host,port))
+print("Menyambungkan Ke server")
+message = s.recv(1024)
+message = message.decode()
+print("Pesan Dari server : ", message)
+while 1:
+	message = s.recv(1024)
+	message = message.decode()
+	print("server:: ",message)
+	message = s.recv(1024)
+	message = message.decode()
+	print("Client_1 : ",message)
+	new_message = input("masukan Pesan:")
+	new_message = str(new_message).encode()
+	s.send(new_message)
+	print("pesan terkirim")

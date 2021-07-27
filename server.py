@@ -1,0 +1,27 @@
+import socket
+s = socket.socket()
+host = socket.gethostname()
+port = 8080
+s.bind((host,port))
+s.listen(1)
+print("Proses dengan dua koneksi")
+conn1, addr1 = s.accept()
+print("Client_1 terkoneksi...")
+conn1.send("Selamat Datang di Server...".encode())
+print("Proses dengan 1 koneksi")
+conn2, addr2 = s.accept()
+print("Client_2 terkoneksi...")
+conn2.send("Selamat Datang di Server...".encode())
+while 1:
+    message = input("Masukan Pesan: ")
+    message = str(message).encode()
+    conn1.send(message)
+    conn2.send(message)
+    print("Pesan Terkirim")
+    recv_message = conn1.recv(1024)
+    print("Client_1 : ", recv_message.decode())
+    conn2.send(recv_message)
+    recv_message = conn2.recv(1024)
+    print ("Client_2 : ", recv_message.decode())
+    conn1.send(recv_message)
+        
